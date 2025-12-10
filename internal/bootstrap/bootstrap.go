@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"log"
 	"os"
+	"plane-discord-bot/internal/application/commands"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/runsystemid/gontainer"
@@ -19,10 +20,14 @@ func Run() {
 	defer discord.Close()
 
 	RegisterApi()
+	RegisterApplication()
 
 	if err := appContainer.Ready(); err != nil {
 		log.Fatal("Failed to populate service")
 	}
+
+	cmdHandler := appContainer.GetServiceOrNil("commandHandler").(*commands.CommandHandler)
+	cmdHandler.RegisterCompleteCommand()
 
 	port := os.Getenv("PORT")
 	if port == "" {
