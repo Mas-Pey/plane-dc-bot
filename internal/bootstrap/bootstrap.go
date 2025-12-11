@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"plane-discord-bot/internal/application/commands"
@@ -34,11 +35,24 @@ func Run() {
 		port = "8080"
 	}
 
-	log.Printf("Listening on port :%s", port)
+	printLogo(8080)
 
 	fiberService := appContainer.GetServiceOrNil("fiber").(*fiber.App)
 
 	if err := fiberService.Listen(":" + port); err != nil {
 		log.Fatal("Server Shutdown", err)
 	}
+}
+
+func printLogo(port int) {
+	fmt.Printf(`
+	 /$$$$$$$  /$$$$$$$$ /$$     /$$
+	| $$__  $$| $$_____/|  $$   /$$/
+	| $$  \ $$| $$       \  $$ /$$/ 
+	| $$$$$$$/| $$$$$     \  $$$$/  
+	| $$____/ | $$__/      \  $$/   
+	| $$      | $$          | $$    
+	| $$      | $$$$$$$$    | $$    
+	|__/      |________/    |__/    
+	Listening on port : %d`, port)
 }
