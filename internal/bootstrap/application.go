@@ -4,6 +4,7 @@ import (
 	"plane-discord-bot/internal/application"
 	"plane-discord-bot/internal/application/api"
 	"plane-discord-bot/internal/application/commands"
+	"plane-discord-bot/internal/application/services"
 )
 
 func RegisterApi() {
@@ -14,4 +15,6 @@ func RegisterApi() {
 func RegisterApplication() {
 	appContainer.RegisterService("commandHandler", &commands.CommandHandler{})
 	appContainer.RegisterService("planeCommand", &commands.PlaneCommand{})
+
+	appContainer.RegisterService("planeService", services.NewPlaneService())
 }
